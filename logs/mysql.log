@@ -1,0 +1,15 @@
+[2014-12-25 14:35:54.639] [ERROR] mysql - Query [Lost connection to MySQL server during query] SQL [SHOW TABLES;]
+[2014-12-25 14:35:54.639] [ERROR] mysql - Execute [MySQL server has gone away] SQL [CREATE TABLE `logs_4` (
+`id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+`eid` int(10) unsigned NOT NULL DEFAULT "0",
+`csid` int(10) unsigned NOT NULL DEFAULT "0",
+`loss` int(6) unsigned NOT NULL DEFAULT "0",
+`avg` decimal(10,2) NOT NULL DEFAULT "0.00",
+`max` int(6) unsigned NOT NULL DEFAULT "0",
+`min` int(6) unsigned NOT NULL DEFAULT "0",
+`time` int(11) unsigned NOT NULL DEFAULT "0",
+`create` int(11) unsigned NOT NULL DEFAULT "0",
+`msg` text NOT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;]
+[2014-12-25 17:22:59.761] [ERROR] mysql - Query [Lost connection to MySQL server during query] SQL [SELECT * FROM `equipments` WHERE 1=1  LIMIT 0, 11]

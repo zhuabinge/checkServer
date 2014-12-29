@@ -1,0 +1,48 @@
+<div class="sidebar" id="sidebar">
+  <ul class="nav nav-list">
+    <li <% if(controller == 'index') { %> class="active" <%}%> >
+      <a href="<%= util.url('')%>">
+        <i class="icon-dashboard"></i>
+        <span class="menu-text">控制台</span>
+      </a>
+    </li>
+    <li <% if(controller == 'servers') { %> class="active" <%}%> >
+      <a href="" class="dropdown-toggle">
+        <i class="icon-list"></i>
+        <span class="menu-text">服务设置</span>
+      </a>
+      <ul class="submenu">
+        <li <% if(action == 'ping') { %> class="active" <%}%> >
+          <a href="<%= util.url('servers/ping')%>">
+            <i class="icon-double-angle-right"></i>
+            ping
+          </a>
+        </li>
+        <li <% if(action == 'http') { %> class="active" <%}%> >
+          <a href="<%= util.url('servers/http')%>">
+            <i class="icon-double-angle-right"></i>
+            http
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li <% if(controller == 'hosts') { %> class="active" <%}%> >
+      <a href="<%= util.url('hosts')%>">
+        <i class="icon-text-width"></i>
+        <span class="menu-text">主机管理</span>
+      </a>
+    </li>
+    <li <% if(controller == 'manages') { %> class="active" <%}%> >
+      <a href="<%= util.url('manages')%>">
+        <i class="icon-text-width"></i>
+        <span class="menu-text">管理设置</span>
+      </a>
+    </li>
+    <li <% if(controller == 'systems') { %> class="active" <%}%> >
+      <a href="<%= util.url('systems')%>">
+        <i class="icon-text-width"></i>
+        <span class="menu-text">系统设置</span>
+      </a>
+    </li>
+  </ul><!-- /.nav-list -->
+</div>

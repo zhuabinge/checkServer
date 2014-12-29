@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title>警报日志</title>
+   <% include ../css.ejs %>
+  </head>
+  <body>
+<% include ../navbar.ejs %>
+<div class="container-fluid">
+   <% include ../sidebar.ejs %>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <h2 class="sub-header">事件</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>类型</th>
+          <th>设备ip</th>
+          <th>检测设备</th>
+          <th>等级</th>
+          <th>出现次数</th>
+          <th>开始时间</th>
+          <th>关闭时间</th>
+          <th>日期</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% if (even.type === 1) { %>
+            <th> ping</th>
+          <% } else{ %>
+            <th> even.type</th>
+          <% } %>
+          <th><%= even.ip %> </th>
+          <th><%= even.name %> </th>
+          <th><%= even.level %> </th>
+          <th><%= even.counter %> </th>
+          <th><%= even.start_time %> </th>
+          <th><%= even.end_time %> </th>
+          <th><%= even.day %> </th>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2 class="sub-header">日志详情</h2>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>日志id</th>
+          <th>设备ip</th>
+          <th>检测设备</th>
+          <th>loss</th>
+          <th>avg</th>
+          <th>max</th>
+          <th>min</th>
+          <th>出现时间</th>
+          <th>信息</th>
+          <th>纪录时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% logs.map(showlogs) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div>
+   <% include ../js.ejs %>
+<% function showlogs(log) { %>
+  <tr>
+    <th> <%= log.id %> </th>
+    <th> <%= log.name %> </th>
+    <th> <%= log.ip %> </th>
+    <th> <%= log.loss %> </th>
+    <th> <%= log.avg %> </th>
+    <th> <%= log.max %> </th>
+    <th> <%= log.min %> </th>
+    <th> <%=: log.time | time %> </th>
+    <th> <%= log.msg %> </th>
+    <th> <%=: log.create| day %> </th>
+  </tr>
+<% } %>
+  </body>
+</html>

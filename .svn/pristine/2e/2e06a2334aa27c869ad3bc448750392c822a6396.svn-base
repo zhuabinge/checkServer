@@ -1,0 +1,24 @@
+var equipments = [], mysql;
+var equipment = {
+  getEquipment: function(mask) {
+    if (equipments[mask]) {
+      return equipments[mask];
+    }
+    var sql = mysql.sqlString.format('SELECT * FROM `equipments` WHERE `md5` = ?',[mask]);
+    var result = mysql.dbQuery(sql);
+    if (result[0]) {
+      equipments[mask] = result[0];
+      return equipments[mask];
+    } else {
+      return false;
+    }
+  },
+  //清空缓存下来的设备
+  resetEquipment: function() {
+    equipments = [];
+  },
+};
+module.exports = function(l) {
+  mysql = l.getMysql();
+  return equipment;
+};

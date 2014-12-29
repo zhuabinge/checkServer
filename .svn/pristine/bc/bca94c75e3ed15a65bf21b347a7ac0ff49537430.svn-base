@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<h1>事件页面</h1>
+<% function showPingEven(even) { %>
+  <tr>
+    <th> <%= even.id %> </th>
+    <th> <%= even.eid %> </th>
+    <th> <%= even.csid %> </th>
+    <th> <%= even.csid %> </th>
+    <% if (even.level === 1) { %>
+      <th> WARN</th>
+    <% } else  if (even.level === 2) { %>
+      <th> MAJOR</th>
+    <% } else if (even.level === 3) { %>
+      <th> CRITICAL</th>
+    <% } else if (even.level === 0) { %>
+      <th> 已关闭</th>
+    <% } else { %>
+      <th> UNKNOWN</th>
+    <% } %>
+    <th> <%= even.counter %> </th>
+    <th> <%= even.start_time %> </th>
+    <th> <%= even.end_time %> </th>
+    <th> <%= even.day %> </th>
+    <th> <a href= <%= '/events/show?id=' + even.id %> target="_blank">点击查看</a> </th>
+  </tr>
+<% } %>
+<h3>ping错误事件</h3>
+<table border="1">
+    <tr>
+      <th>id</th>
+      <th>eid</th>
+      <th>cs</th>
+      <th>csid</th>
+      <th>level</th>
+      <th>counter</th>
+      <th>start_time</th>
+      <th>end_time</th>
+      <th>day</th>
+      <th>查看事件</th>
+    </tr>
+  <% errorEvens.map(showPingEven) %>
+</table>
+
+<h3>ping已关闭事件</h3>
+<table border="1">
+    <tr>
+      <th>id</th>
+      <th>eid</th>
+      <th>cs</th>
+      <th>csid</th>
+      <th>level</th>
+      <th>counter</th>
+      <th>start_time</th>
+      <th>end_time</th>
+      <th>day</th>
+      <th>查看事件</th>
+    </tr>
+    <% colseEvens.map(showPingEven) %>
+</table>
+
+<script>
+  setTimeout(function(){
+    location.reload();
+  }, 1000 * 5);
+</script>
+</body>
+
+</html>
+

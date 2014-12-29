@@ -1,0 +1,46 @@
+var config = require('../etc/config'), logger, sys, mysql, dateUtil;
+exports.config = config;
+exports.LEVEL = {
+  CLOSE: -1,
+  OK: 0,
+  WARN: 1,
+  MAJOR: 2,
+  CRITICAL: 3,
+  UNKNOWN: 5,
+};
+exports.getDateUtil = function() {
+  if (!dateUtil) {
+    dateUtil = require('./time');
+  }
+  return dateUtil.getDateUtil();
+};
+exports.getMysql = function() {
+  if (!mysql) {
+    mysql = require('./mysql');
+  }
+  return mysql.getMysql();
+};
+exports.getLogger = function(log) {
+  if (!logger) {
+    logger = require('./logger');
+  }
+  return logger.getLogger(log);
+};
+exports.getModel = function(model) {
+  if (!sys) {
+    sys = require('./sys');
+  }
+  return sys.getModel(model);
+};
+exports.getView = function(view) {
+  if (!sys) {
+    sys = require('./sys');
+  }
+  return sys.getView(view);
+};
+exports.getController = function(controller) {
+  if (!sys) {
+    sys = require('./sys');
+  }
+  return sys.getController(controller);
+};

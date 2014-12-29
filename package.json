@@ -1,0 +1,11 @@
+{
+  "name": "hao-sys",
+  "dependencies": {
+    "mysql-libmysqlclient": "*",
+    "ejs": "*",
+    "nodemailer": "*",
+    "log4js": "*",
+    "express": "3.x",
+    "body-parser": "*"
+  }
+}

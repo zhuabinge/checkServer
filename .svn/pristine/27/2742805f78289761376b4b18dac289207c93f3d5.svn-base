@@ -1,0 +1,2 @@
+<script src="<%=: 'statics/js/jquery.min.js' |url: webSite  %>"></script>
+<script src="<%=: 'statics/js/bootstrap.min.js' |url: webSite  %>"></script>

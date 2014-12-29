@@ -1,0 +1,63 @@
+var lib = require('./lib');
+config = lib.config;
+workerLogger = lib.getLogger('worker');
+var onExit = function() {
+  lib.getLogger('worker').info('子进程' + process.pid + ' 已终止');
+  setImmediate(function() {
+    process.exit(1);
+  });
+};
+process.on('SIGTERM', onExit);
+process.on('SIGINT', onExit);
+// 错误函数
+var onError = function(error) {
+  workerLogger.fatal(error);
+  onExit();
+};
+process.on('uncaughtException', function(error) {
+  onError(error);
+});
+workerLogger.info('子进程' + process.pid + ' 已启动');
+var http = require('http');
+var fs = require('fs');
+
+//静态文件路径
+staticPath =  config.staticPath || dirname;
+
+http.createServer(function (req, res) {
+  var parames = require('url').parse(req.url, true);
+  var body = '请求无效';
+  var query = parames.query;
+  try {
+    //静态文件路径
+    if (parames.pathname.match(/\.(js|css|mp3)$/)) {
+      filePath = staticPath + parames.pathname;
+      res.end(fs.readFileSync(filePath));
+    } else {
+      $_router = parames.pathname.split('/');
+      body = 'controller不存在';
+      _controller = $_router[1] === '' ? 'index' : $_router[1];
+      _action = !$_router[2] || $_router[2] === '' ? 'index' : $_router[2];
+      controller = lib.getController(_controller);
+      if (controller) {
+        if (typeof controller[_action] === 'function') {
+          controller.query = query;
+          view = lib.getView();
+          view.assign('webSite','http://' + req.headers.host);
+          view.assign('GET', query);
+          view.assign('action', _action);
+          view.assign('controller', _controller);
+          controller.view = view;
+          controller[_action](req, res);
+          return;
+        }
+        body = 'actioin不存在';
+      }
+      res.end(body);
+    }
+    } catch (e) {
+      res.end(e.toString());
+    }
+}).listen(config.port, function() {
+
+});

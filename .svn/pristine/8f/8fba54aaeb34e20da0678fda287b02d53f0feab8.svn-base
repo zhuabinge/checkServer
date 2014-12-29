@@ -1,0 +1,33 @@
+module.exports = function(l) {
+  lib = l;
+  LEVEL = lib.LEVEL;
+  var eventsModel = lib.getModel('events');
+  return {
+    index: function(req, res) {
+      var colseEvens =  eventsModel.getPingCloseEvents();
+      var errorEvens =  eventsModel.getPingErrorEvents();
+      var sound = 0 ;
+      errorEvens.forEach(function(err) {
+        if ( err.level >= LEVEL.WARN && sound < 0.1) {
+          sound = 0.1;
+        }
+        if (err.level >= LEVEL.MAJOR && sound < 0.5 ) {
+          sound = 0.5;
+        }
+        if (err.level >= LEVEL.CRITICAL && sound < 1){
+          sound = 1;
+        }
+      });
+      var view = lib.getView();
+      view.assign('sound', sound);
+      view.assign('errorEvens', errorEvens);
+      view.assign('colseEvens', colseEvens);
+      res.end(view.display('index.ejs'));
+    },
+    test: function(req, res) {
+      var eventsModel = lib.getModel('events');
+      eventsModel.getEvens(1, 2 , 1418550029);
+      res.end('test');
+    },
+  };
+};

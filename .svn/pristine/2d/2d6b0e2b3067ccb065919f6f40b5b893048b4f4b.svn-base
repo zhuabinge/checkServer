@@ -1,0 +1,65 @@
+<html>
+<body>
+<h3>事件描述</h3>
+
+<table border="1">
+    <tr>
+      <th>类型</th>
+      <th>设备ip</th>
+      <th>检测设备</th>
+      <th>等级</th>
+      <th>出现次数</th>
+      <th>开始时间</th>
+      <th>关闭时间</th>
+      <th>日期</th>
+    </tr>
+    <tr>
+      <% if (even.type === 1) { %>
+        <th> ping</th>
+      <% } else{ %>
+        <th> even.type</th>
+      <% } %>
+      <th><%= even.ip %> </th>
+      <th><%= even.name %> </th>
+      <th><%= even.level %> </th>
+      <th><%= even.counter %> </th>
+      <th><%= even.start_time %> </th>
+      <th><%= even.end_time %> </th>
+      <th><%= even.day %> </th>
+    </tr>
+</table>
+
+<% function showlogs(log) { %>
+  <tr>
+    <th> <%= log.id %> </th>
+    <th> <%= log.name %> </th>
+    <th> <%= log.ip %> </th>
+    <th> <%= log.loss %> </th>
+    <th> <%= log.avg %> </th>
+    <th> <%= log.max %> </th>
+    <th> <%= log.min %> </th>
+    <th> <%= log.time %> </th>
+    <th> <%= log.msg %> </th>
+    <th> <%= log.create %> </th>
+  </tr>
+<% } %>
+
+<h3>日志</h3>
+<table border="1">
+    <tr>
+      <th>日志id</th>
+      <th>设备ip</th>
+      <th>检测设备</th>
+      <th>loss</th>
+      <th>avg</th>
+      <th>max</th>
+      <th>min</th>
+      <th>出现时间</th>
+      <th>信息</th>
+      <th>纪录时间</th>
+    </tr>
+    <% logs.map(showlogs) %>
+</table>
+</body>
+</html>
+

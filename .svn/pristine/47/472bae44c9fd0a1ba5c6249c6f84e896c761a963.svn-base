@@ -1,0 +1,9 @@
+<div class="col-sm-3 col-md-2 sidebar">
+<ul class="nav nav-sidebar">
+  <% if (controller == 'events') { %>
+  <li>事件<li>
+  <li <%if (action == 'errors') {%> class="active" <%}%>><a href="<%=: 'events/errors' |url: webSite  %>">当前错误事件</a></li>
+  <li <%if (action == 'closes') {%> class="active" <%}%>><a href="<%=: 'events/closes' |url: webSite  %>">已关闭事件</a></li>
+  <% }%>
+</ul>
+</div>

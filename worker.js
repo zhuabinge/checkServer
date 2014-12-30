@@ -50,11 +50,13 @@ app.use(function(req, res, next){
 });
 app.use(function(req, res, next) {
   var _router = req._parsedUrl.pathname.split('/');
+  //console.log(_router);
   query = req.query;
   body = 'controller不存在';
   _controller = _router[1] === '' ? 'index' : _router[1];
   _action = !_router[2] || _router[2] === '' ? 'index' : _router[2];
   controller = lib.getController(_controller);
+  //console.log(controller[_action]);
   if (controller) {
     if (typeof controller[_action] === 'function') {
       controller.query = query;

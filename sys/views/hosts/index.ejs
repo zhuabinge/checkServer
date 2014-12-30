@@ -36,9 +36,12 @@
     <script src="assets/js/bootbox.min.js"></script>
     <script type="text/javascript">
       function loadData (page) {
-        url = "<%= util.url('hosts/get?page=')%>" + page;
-        $('#data').load(url);
+        //alert(page);
+          url = "<%= util.url('hosts/get?page=')%>" + page;
+          $('#data').load(url);
+        
       }
+
       loadData(1);
     </script>
   </body>

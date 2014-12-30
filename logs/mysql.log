@@ -13,3 +13,4 @@
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;]
 [2014-12-25 17:22:59.761] [ERROR] mysql - Query [Lost connection to MySQL server during query] SQL [SELECT * FROM `equipments` WHERE 1=1  LIMIT 0, 11]
+[2014-12-29 10:52:32.460] [ERROR] mysql - Query [Unknown column 'updated' in 'order clause'] SQL [SELECT * FROM `equipments` WHERE 1=1  ORDER BY `static` DESC, `updated` DESC LIMIT 0, 10]

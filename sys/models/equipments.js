@@ -1,3 +1,4 @@
+var lib = require("../../lib");
 var equipments = [];
 setInterval(function () {
   equipments = [];
@@ -19,13 +20,20 @@ module.exports = function(l) {
         return false;
       }
     },
-    getEquipments: function(condition, page, size) {
+    getEquipments: function(condition, currentpage, size) {
       if (!condition) {
         condition = {};
       }
-      page = isNaN(parseInt(page, 10)) ? 1 : page;
-      size = isNaN(parseInt(size, 10)) ? 5 : size;
-      var offset = (page - 1) * size;
+      //console.log(page + " , " + size + "\n");
+      // page = isNaN(parseInt(page, 10)) ? 1 : page;
+      // size = isNaN(parseInt(size, 10)) ? 5 : size;
+      //console.log(page + " , " + size + "\n");
+
+      // var countSQL = 'select count(*) form `equipments`';
+      // var count = mysql.dbQuery(countSQL);
+      // var view = lib.getView();
+      // view.assign
+      var offset = (currentpage - 1) * size;
       var sql = [
         'SELECT * FROM `equipments` WHERE 1=1',
         sqlString.objectToValues(condition),
@@ -45,7 +53,7 @@ module.exports = function(l) {
         condition = {};
       }
       var sql = [
-        'SELECT COUNT(0) AS `count` FROM `equipments` WHERE 1=1',
+        'SELECT COUNT(*) AS `count` FROM `equipments` WHERE 1=1',
         sqlString.objectToValues(condition),
       ].join(' ');
       var result = mysql.dbQuery(sql);

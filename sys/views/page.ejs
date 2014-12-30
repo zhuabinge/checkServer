@@ -1,0 +1,11 @@
+<form id="pageform">
+<% if(currentpage == 1) { %>首页&nbsp;上一页
+<% } else {%><a href="javascript:loadData(1);">首页</a>&nbsp;
+<a href="javascript:loadData(<%=currentpage-1 %>)">上一页</a>
+<% } if(currentpage < totalpage ){ %><a href="javascript:loadData(<%= (currentpage - -1)  %>)">下一页</a>&nbsp;
+<a href="javascript:loadData(<%=totalpage%>)">尾页</a><br>
+<% } else {%>下一页&nbsp;尾页<br><%}%>
+共<%=totalpage%>页&nbsp;当前第<input type="text" id="page" value="<%=currentpage%>" size="2">页
+<input type="button" value="GO" onclick="loadData($('#page').val());">
+</form>
+

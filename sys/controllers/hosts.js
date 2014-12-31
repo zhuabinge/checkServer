@@ -11,23 +11,30 @@ module.exports = function(lib) {
       var view = this.view;
       var count = eqmodel.getEquipmentsCount({});
       var totalpage;
-      if(count%10 > 0){
-        //console.log(Math.round(count/10)+1);
-        totalpage = parseInt(count/10)+1;
+      if(count % 10 > 0){
+        totalpage = parseInt(count / 10) + 1;
       }
       else{
-        //console.log(Math.round(count/10));
-        totalpage = parseInt(count/10);
+        totalpage = parseInt(count / 10);
       }
-      console.log(parseInt(query.page, 10));
+      //console.log(parseInt(query.page, 10));
       var page = isNaN(parseInt(query.page, 10)) || parseInt(query.page, 10) > totalpage? 1 : query.page;
       equipments = eqmodel.getEquipments({
       }, page, size);
-
       view.assign('equipments', equipments);
       view.assign('currentpage', page);
       view.assign('totalpage',totalpage);
       view.display('hosts/data.ejs', res);
+    },
+    update: function(req, res) {
+      var query = req.body;
+      var result = eqmodel.updateSalt(query.id, query.ip, query.salt);
+      res.send({ result: result });
+    },
+    setStatus: function(req, res){
+      var query = req.body;
+      var result = eqmodel.setStatus(query.id, query.status);
+      res.send({ result: result });
     }
   };
 };

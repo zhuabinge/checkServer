@@ -24,15 +24,6 @@ module.exports = function(l) {
       if (!condition) {
         condition = {};
       }
-      //console.log(page + " , " + size + "\n");
-      // page = isNaN(parseInt(page, 10)) ? 1 : page;
-      // size = isNaN(parseInt(size, 10)) ? 5 : size;
-      //console.log(page + " , " + size + "\n");
-
-      // var countSQL = 'select count(*) form `equipments`';
-      // var count = mysql.dbQuery(countSQL);
-      // var view = lib.getView();
-      // view.assign
       var offset = (currentpage - 1) * size;
       var sql = [
         'SELECT * FROM `equipments` WHERE 1=1',
@@ -61,6 +52,18 @@ module.exports = function(l) {
         return result[0].count;
       }
       return 0;
+    },
+    updateSalt:function(id, ip, salt){
+      var sql = 'UPDATE `equipments` SET `salt`= ? ,`md5`= MD5(?) WHERE `id`= ?';
+      sql = sqlString.format(sql, [salt, ip + ':' + salt, id]);
+      var result = mysql.dbExecute(sql);
+      return result.affectedRows;
+    },
+    setStatus:function(id,status){
+      var sql = 'UPDATE `equipments` SET `static`= ? WHERE `id`= ?';
+      sql = sqlString.format(sql, [status, id]);
+      var result = mysql.dbExecute(sql);
+      return result.affectedRows;
     }
   };
   return model;

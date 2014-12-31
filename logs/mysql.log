@@ -14,3 +14,8 @@ PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;]
 [2014-12-25 17:22:59.761] [ERROR] mysql - Query [Lost connection to MySQL server during query] SQL [SELECT * FROM `equipments` WHERE 1=1  LIMIT 0, 11]
 [2014-12-29 10:52:32.460] [ERROR] mysql - Query [Unknown column 'updated' in 'order clause'] SQL [SELECT * FROM `equipments` WHERE 1=1  ORDER BY `static` DESC, `updated` DESC LIMIT 0, 10]
+[2014-12-30 18:13:41.677] [ERROR] mysql - Execute [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`id`=undefined' at line 1] SQL [update `equipments` set `salt`=undefinedwhere `id`=undefined]
+[2014-12-30 18:15:47.709] [ERROR] mysql - Execute [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`id`=undefined' at line 1] SQL [update `equipments` set `salt`=undefinedwhere `id`=undefined]
+[2014-12-30 18:20:57.147] [ERROR] mysql - Execute [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`id`=22' at line 1] SQL [update `equipments` set `salt`=eeewhere `id`=22]
+[2014-12-30 18:21:30.752] [ERROR] mysql - Execute [Unknown column 'eee' in 'field list'] SQL [update `equipments` set `salt`=eee where `id`=25]
+[2014-12-30 18:24:46.000] [ERROR] mysql - Execute [You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '" where `id`='23'' at line 1] SQL [update `equipments` set `salt`= 'ddd'" where `id`='23']

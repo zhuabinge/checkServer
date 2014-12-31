@@ -27,14 +27,14 @@
               <%} %>
             </td>
             <td>
-              <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
-                <button class="btn btn-xs btn-danger">
+              <div class="visible-md visible-lg hidden-sm hidden-xs btn-group">               
+                <button class="btn btn-xs btn-danger" eq-id="<%= eq.id%>" eq-status="<%= eq.static%>">
                   禁用
                 </button>
-                <button class="btn btn-xs btn-success">
+                <button class="btn btn-xs btn-success" eq-id="<%= eq.id%>" eq-status="<%= eq.static%>">
                    启用
-                </button>
-                <button class="btn btn-xs btn-info saltUpdate", ip-data="<%= eq.ip%>", ip-id="<%= eq.id%>">
+                </button>               
+                <button class="btn btn-xs btn-info saltUpdate" ip-ip="<%= eq.ip%>" ip-salt="<%= eq.salt%>"  ip-data="<%= eq.ip%>" ip-id="<%= eq.id%>">
                   更新salt
                 </button>
               </div>
@@ -84,19 +84,64 @@
   </div><!-- /.table-responsive -->
 </div><!-- /span -->
 <script type="text/javascript">
+
+  $('.btn-danger').click(function(){
+    var id = $(this).attr('eq-id');
+    var status = $(this).attr('eq-status');
+    if( status == 1){     
+          $.ajax({
+            url: 'hosts/setStatus',
+            type: "POST",
+            data: {id: id, status: 0},
+            dataType : 'json',
+            success: function(data){
+              if(data.result > 0 ){
+                loadData(<%= currentpage%>);
+              }
+            }
+          });
+          return false;
+    }
+  });
+  $('.btn-success').click(function(){
+    var id = $(this).attr('eq-id');
+    var status = $(this).attr('eq-status');
+    if( status == 0){     
+          $.ajax({
+            url: 'hosts/setStatus',
+            type: "POST",
+            data: {id: id, status: 1},
+            dataType : 'json',
+            success: function(data){
+              if(data.result > 0 ){
+                loadData(<%= currentpage%>);
+              }
+            }
+          });
+          return false;
+    }
+  });
   $('.saltUpdate').click(function() {
     var title = '请输入新的' + $(this).attr('ip-data') + '的salt';
     var id = $(this).attr('ip-id');
+    var ip = $(this).attr('ip-ip');
+    var salt = $(this).attr('ip-salt');
+    //console.log(this);
     bootbox.dialog({
       message: [
       '<div><h4>' + title + '</h4></div>',
       '<hr>',
-      '<form class="form-horizontal" role="form" id="update">',
+      '<form class="form-horizontal" role="form" id="update" method="post" action="hosts/update">',
         '<div class="form-group">',
-          '<label class="col-sm-2 control-label no-padding-right" for="form-field-1">新salt</label>',
-          '<div class="col-sm-10">',
+        '<label  class="col-sm-2 control-label no-padding-left" for="form-field-1">原salt</label>',
+         '<div class="col-sm-10" style="padding-top:5px;">' + salt + '</div>',
+        '</div>',
+        '<div class="form-group">',
+          '<label class="col-sm-2 control-label no-padding-left" for="form-field-1">新salt</label>',
+          '<div class="col-sm-10">', 
             '<input type="text" id="salt" placeholder="新salt" class="col-xs-10 col-sm-5" name="salt"/>',
             '<input style="display:none;" id="id" name="id" value="' + id + '"/>',
+            '<input style="display:none;" id="ip" name="ip" value="' + ip + '"/>',
             '&nbsp;<input type="submit" class="btn btn-xs btn-success" value="更新!!" />',
           '</div>',
         '</div>',
@@ -111,20 +156,36 @@
     });
     $('#update').submit(function() {
       var id = $.trim($('#id').val());
+      var ip = $.trim($('#ip').val());
       var salt = $.trim($('#salt').val());
       if (id === '') {
-        alert('参数出错,请刷新重试');
+        alert('参数出错,请刷新重试！');
         return false;
       }
       if (salt === '') {
-        alert('请输入salt');
+        alert('请输入salt！');
         return false;
       }
       if (salt.length !== 3) {
-        alert('salt');
+        alert('salt的长度必须为3！');
         return false;
       }
-
+      //alert(ip);
+      $.ajax({
+        //alert($(this).attr('action'),);
+        url: $(this).attr('action'),
+        type: "POST",
+        data: {id: id, ip: ip, salt: salt},
+        dataType : 'json',
+        success: function(data){
+          if(data.result > 0 ){
+            bootbox.hideAll();
+            loadData(<%= currentpage%>);
+            //console.log(data.id);
+          }
+        }
+      });
+      return false;
     });
   });
 </script>

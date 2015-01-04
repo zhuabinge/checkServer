@@ -84,6 +84,9 @@
   </div><!-- /.table-responsive -->
 </div><!-- /span -->
 <script type="text/javascript">
+  
+
+
 
   $('.btn-danger').click(function(){
     var id = $(this).attr('eq-id');
@@ -170,9 +173,7 @@
         alert('salt的长度必须为3！');
         return false;
       }
-      //alert(ip);
       $.ajax({
-        //alert($(this).attr('action'),);
         url: $(this).attr('action'),
         type: "POST",
         data: {id: id, ip: ip, salt: salt},
@@ -181,7 +182,6 @@
           if(data.result > 0 ){
             bootbox.hideAll();
             loadData(<%= currentpage%>);
-            //console.log(data.id);
           }
         }
       });

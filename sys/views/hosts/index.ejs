@@ -18,9 +18,9 @@
               </li>
               <li class="active">主机管理</li>
               <div class="nav-search" id="nav-search">
-              <form class="form-search">
+              <form id="form-search" class="form-search" method="post" action="hosts/get" >
                 <span class="input-icon">
-                  <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" name="ip" id="nav-search-input" autocomplete="off">
                   <i class="icon-search nav-search-icon"></i>
                 </span>
               </form>
@@ -44,14 +44,28 @@
     <% include ../js.ejs %>
     <script src="assets/js/bootbox.min.js"></script>
     <script type="text/javascript">
-      function loadData (page) {
+      function loadData (page) {  //加载页面数据
         //alert(page);
-          url = "<%= util.url('hosts/get?page=')%>" + page;
+          var searchValue = $.trim($('#nav-search-input').val());
+          url = "<%= util.url('hosts/get?page=')%>" + page + "&ip=" + searchValue;
           $('#data').load(url);
         
       }
+      loadData(1);  //默认加载第一个页面
 
-      loadData(1);
+      $('#form-search').submit(function(){
+        var searchValue = $.trim($('#nav-search-input').val());
+        $.ajax({
+          url: $(this).attr('action'),
+          type: 'POST',
+          data: {ip: searchValue},
+          datatype: 'json',
+          success: function(data){
+            $('#data').html(data);
+          }
+        });
+        return false;
+      });
     </script>
   </body>
 </html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>主机状态</title>
+    <% include ../css.ejs %>
+  </head>
+  <body>
+    <% include ../navbar.ejs %>
+    <div class="main-container" id="main-container">
+      <div class="main-container-inner">
+        <% include ../sidebar.ejs %>
+        <div class="main-content">
+          <div class="breadcrumbs" id="breadcrumbs">
+            <ul class="breadcrumb">
+              <li>
+                <i class="icon-home home-icon"></i>
+                <a href="#">首页</a>
+              </li>
+              <li class="active">管理设置</li>
+              <div class="nav-search" id="nav-search">
+              <form id="form-search" class="form-search" method="post" action="manager/get" >
+                <span class="input-icon">
+                  <input type="text" placeholder="Search ..." class="nav-search-input" name="name" id="nav-search-input" autocomplete="off">
+                  <i class="icon-search nav-search-icon"></i>
+                </span>
+              </form>
+            </div>
+            </ul>
+          </div><!-- .breadcrumbs -->
+          <div class="page-content">
+            <div class="page-header">
+              <h1>
+                值班表
+              </h1>
+            </div><!-- /.page-header -->
+
+            <div class="row" id="data">
+
+            </div><!-- /row -->
+          </div><!-- /.page-content -->
+        </div><!-- /.main-content -->
+      </div><!-- /.main-container-inner -->
+    </div><!-- /.main-container -->
+    <% include ../js.ejs %>
+    <script src="assets/js/bootbox.min.js"></script>
+    <script type="text/javascript">
+      function loadData (page) {  //加载页面数据
+          var searchValue = $.trim($('#nav-search-input').val());
+          url = "<%= util.url('manager/get?page=')%>" + page + "&name=" + searchValue;
+          $('#data').load(url);
+        
+      }
+      loadData(1);  //默认加载第一个页面
+
+      $('#form-search').submit(function(){
+        var searchValue = $.trim($('#nav-search-input').val());
+        $.ajax({
+          url: $(this).attr('action'),
+          type: 'POST',
+          data: {name: searchValue},
+          datatype: 'json',
+          success: function(data){
+            $('#data').html(data);
+          }
+        });
+        return false;
+      });
+    </script>
+  </body>
+</html>

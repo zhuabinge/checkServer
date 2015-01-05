@@ -1,11 +1,11 @@
 module.exports = function(lib) {
-  eqmodel = lib.getModel('equipments');
+  var mamodel = lib.getModel("manager");
   return {
     index: function(req, res) {
       var view = this.view;
-      view.display('hosts/index.ejs', res);
+      view.display('manager/index.ejs', res);
     },
-    get: function(req, res) {
+    get: function(req, res){
       var query = this.query;
       var size = 10;
       var view = this.view;
@@ -14,10 +14,10 @@ module.exports = function(lib) {
         searchValue = req.body;
       }
       else{
-        searchValue = {ip: query.ip};
+        searchValue = {name: query.name};
       }
 
-      var count = eqmodel.getEquipmentsCount(searchValue);  
+      var count = mamodel.getManagerCount(searchValue);  
       var totalpage;
       if(count % 10 > 0){
         totalpage = parseInt(count / 10) + 1;
@@ -27,21 +27,16 @@ module.exports = function(lib) {
       }
 
       var page = isNaN(parseInt(query.page, 10)) || parseInt(query.page, 10) > totalpage? 1 : query.page;
-      equipments = eqmodel.getEquipments(searchValue, page, size);
+      var manager = mamodel.getManager(searchValue, page, size);
 
-      view.assign('equipments', equipments);
+      view.assign('manager', manager);
       view.assign('currentpage', page);
       view.assign('totalpage',totalpage);
-      view.display('hosts/data.ejs', res);
+      view.display('manager/data.ejs', res);
     },
-    update: function(req, res) {
+    update: function(req, res){
       var query = req.body;
-      var result = eqmodel.updateSalt(query.id, query.ip, query.salt);
-      res.send({ result: result });
-    },
-    setStatus: function(req, res){
-      var query = req.body;
-      var result = eqmodel.setStatus(query.id, query.status);
+      var result = mamodel.updateDuty(query);
       res.send({ result: result });
     }
   };
